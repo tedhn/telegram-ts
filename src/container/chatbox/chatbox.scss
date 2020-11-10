@@ -1,0 +1,11 @@
+.chatbox {
+  background-color: #323643;
+  position: relative;
+  height: 100vh;
+  width: 50vw;
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+  }
+}

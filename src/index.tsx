@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import configureAppStore from "./store/configureStore";
 import App from "./App";
-import "./locales/i18n";
+import "./index.scss";
 
 const store = configureAppStore();
 

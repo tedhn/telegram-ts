@@ -1,0 +1,30 @@
+.inputbox {
+  padding: 10px;
+  background-color: #393e46;
+  position: absolute;
+  bottom: 0;
+  height: 8vh;
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .input {
+    background-color: transparent;
+    color: white;
+    padding: 10px;
+    border: none;
+    outline: none;
+    width: 60vw;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .button {
+    background-color: transparent;
+    height: 5vh;
+    width: 7vh;
+    border: none;
+    outline: none;
+    margin-right: 15px;
+  }
+}
