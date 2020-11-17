@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as Plane } from "../svg/paper-plane.svg";
 
-import "./input.scss";
+// import "./input.scss";
 
 interface Props {
   handleSend: any;
@@ -23,10 +23,14 @@ const Input: React.FC<Props> = ({ handleSend }) => {
       <button
         className="button"
         onClick={() => {
-          handleSend(msg, "asdf");
+          if (msg !== "") {
+            handleSend(msg);
+            setMsg("");
+          }
         }}
       >
-        <Plane />
+        {/* <Plane /> */}
+        send
       </button>
     </div>
   );

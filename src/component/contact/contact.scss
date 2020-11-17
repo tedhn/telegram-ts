@@ -1,0 +1,16 @@
+.user {
+  height: 70px;
+  .name {
+    color: white;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  :hover {
+    cursor: pointer;
+    background-color: rgb(42, 84, 177);
+  }
+}
