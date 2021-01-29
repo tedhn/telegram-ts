@@ -1,11 +1,11 @@
 import React from "react";
 
-// import "./contact.scss";
+import "./contact.scss";
 
-const Contact = () => {
+const Contact: React.FC<{ name: any }> = ({ name }) => {
   return (
     <div className="user">
-      <div className="name">DUMMY NAME</div>
+      <div className="name">{name}</div>
     </div>
   );
 };

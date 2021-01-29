@@ -4,6 +4,8 @@ import { Redirect } from "react-router";
 import { updateUser } from "../../store/actions";
 import { rootState } from "../../types";
 
+import db from "../../firebase";
+
 interface Props {
   update: any;
   user: any;
@@ -11,6 +13,13 @@ interface Props {
 
 const Login: React.FC<Props> = ({ update, user }) => {
   const [username, setUsername] = useState("");
+
+  const login = async () => {
+    let resp = db.collection("users").doc(username);
+    let data = await resp.get();
+
+    update(username);
+  };
 
   return (
     <div>
@@ -23,7 +32,7 @@ const Login: React.FC<Props> = ({ update, user }) => {
       />
       <button
         onClick={() => {
-          update(username);
+          login();
         }}
       >
         Log In

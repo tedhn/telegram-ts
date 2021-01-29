@@ -1,14 +1,21 @@
 import React from "react";
 import { Route } from "react-router";
 
-import Chatbox from "./container/chatbox/chatbox";
+import Home from "./container/home";
 import Login from "./container/login/login";
 
 const App: React.FC = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "left",
+        margin: "50px",
+      }}
+    >
       <Route path="/" exact component={Login} />
-      <Route path="/:username" exact component={Chatbox} />
+      <Route path="/:user" exact component={Home} />
     </div>
   );
 };
