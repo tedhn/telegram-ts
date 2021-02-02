@@ -2,10 +2,19 @@ import React from "react";
 
 import "./contact.scss";
 
-const Contact: React.FC<{ name: any }> = ({ name }) => {
+const Contact: React.FC<{ name: any; selectContact: any }> = ({
+  name,
+  selectContact,
+}) => {
+  const handleClick = () => {
+    selectContact(name);
+  };
+
   return (
     <div className="user">
-      <div className="name">{name}</div>
+      <div className="name" onClick={handleClick}>
+        {name}
+      </div>
     </div>
   );
 };

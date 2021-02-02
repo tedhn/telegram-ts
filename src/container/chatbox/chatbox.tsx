@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import Chat from "../../component/chat/chat";
 import Input from "../../component/input/input";
-import { updateMessageHistory } from "../../store/actions";
+import {
+  clearMessageHistory,
+  selectContact,
+  updateMessageHistory,
+} from "../../store/actions";
 import { rootState } from "../../types";
 import "./chatbox.scss";
 
@@ -16,18 +20,19 @@ interface Param {
 interface Props {
   history: Object[];
   update: any;
+  selected: any;
+  clear: any;
 }
 
 const URL = "ws://localhost:3030";
 
-const Chatbox: React.FC<Props> = ({ history, update }) => {
+const Chatbox: React.FC<Props> = ({ history, update, selected, clear }) => {
   let ws = new WebSocket(URL);
   let param = useParams<Param>();
   const user = param.user;
 
   useEffect(() => {
     ws.onopen = () => {
-      // loadChat();
       console.log("connected");
       console.log(param.user);
     };
@@ -40,13 +45,14 @@ const Chatbox: React.FC<Props> = ({ history, update }) => {
   }, []);
 
   const loadChat = async () => {
-    const resp = db.collection("users").doc(user);
+    const resp = db.collection("users").doc("htehnd");
     const json = await resp.get();
     const data = json.data();
 
-    data!["jolyntwl"].forEach((value: string) => {
-      let arr = value.split("/");
-      update(arr[0], arr[1]);
+    console.log(data!.conversatoin[selected]);
+    clear();
+    data!.conversatoin[selected].map((data: string) => {
+      updateHistory(data);
     });
   };
 
@@ -71,25 +77,47 @@ const Chatbox: React.FC<Props> = ({ history, update }) => {
     ws.send(msg);
   };
 
-  return (
-    <div className="chatbox">
-      <div className="title">Dummy name</div>
+  React.useEffect(() => {
+    if (selected) {
+      loadChat();
+    }
+  }, [selected]);
 
-      <div className="chat">
-        {history.map((value: any, key: number) => {
-          return <Chat msg={value} key={key} />;
-        })}
+  if (selected) {
+    return (
+      <div className="chatbox">
+        <div className="title">{selected}</div>
+
+        <div className="chat">
+          {history.map((value: any, key: number) => {
+            return <Chat msg={value} key={key} />;
+          })}
+        </div>
+        <Input handleSend={handleSend} />
       </div>
-
-      <Input handleSend={handleSend} />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="chatbox">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          click a contact to start chatting
+        </div>
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state: rootState) => {
   return {
     history: state.history,
-    user: state.user,
+    selected: state.user.selected,
   };
 };
 
@@ -97,6 +125,9 @@ const mapActionToProps = (dispatch: any) => {
   return {
     update: (msg: string, user: string) => {
       dispatch(updateMessageHistory(msg, user));
+    },
+    clear: () => {
+      dispatch(clearMessageHistory());
     },
   };
 };
